@@ -485,7 +485,7 @@ This is NOT from Clerk. You'll get this from:
 - Make sure `.env.local` is in your `.gitignore`
 - Restart your development server after adding these variables
 
----
+
 
 ---
 
