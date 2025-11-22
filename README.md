@@ -484,8 +484,96 @@ This is NOT from Clerk. You'll get this from:
 - Never commit these keys to version control
 - Make sure `.env.local` is in your `.gitignore`
 - Restart your development server after adding these variables
+---
 
 
+Here's how to get Pusher credentials from the Pusher dashboard:
+
+## Step 1: Access Pusher Dashboard
+
+1. Go to [Pusher Dashboard](https://dashboard.pusher.com)
+2. Sign in to your account
+3. Create a new app or select an existing one
+
+## Step 2: Get Pusher Credentials
+
+Once you're in your app dashboard:
+
+### For New App:
+1. Click **"Create new app"**
+2. Enter app name (e.g., "Jira Clone")
+3. Select cluster (choose the one closest to your users)
+4. Choose "Channels" as the product
+
+### For Existing App:
+1. Click on your app name
+2. Go to **"App Keys"** tab in the sidebar
+
+## Step 3: Copy Each Value
+
+In the **"App Keys"** section, you'll see:
+
+- **`PUSHER_APP_ID`** - The numeric App ID
+- **`PUSHER_KEY`** - The "Key" field (starts with numbers and letters)
+- **`PUSHER_SECRET`** - The "Secret" field (keep this secure!)
+- **`PUSHER_CLUSTER`** - The cluster name (e.g., `mt1`, `us2`, `eu`)
+
+## Step 4: Environment Variables Format
+
+Add these to your `.env.local` file:
+
+```env
+# Pusher Credentials
+PUSHER_APP_ID="your-actual-app-id"
+PUSHER_KEY="your-actual-key"
+PUSHER_SECRET="your-actual-secret"
+PUSHER_CLUSTER="your-cluster"
+
+# Public Pusher variables (exposed to client)
+NEXT_PUBLIC_PUSHER_KEY="your-actual-key"
+NEXT_PUBLIC_PUSHER_CLUSTER="your-cluster"
+```
+
+## Step-by-Step Visual Guide:
+
+```
+Pusher Dashboard → Your App → App Keys Tab
+├── app_id → PUSHER_APP_ID
+├── key → PUSHER_KEY & NEXT_PUBLIC_PUSHER_KEY
+├── secret → PUSHER_SECRET
+└── cluster → PUSHER_CLUSTER & NEXT_PUBLIC_PUSHER_CLUSTER
+```
+
+## Common Clusters:
+- `mt1` - US East (Northern Virginia)
+- `us2` - US West (Oregon)
+- `eu` - Europe (Ireland)
+- `ap1` - Asia Pacific (Singapore)
+
+## Important Notes:
+
+1. **Security**: 
+   - `PUSHER_SECRET` should never be exposed to the client
+   - Only `KEY` and `CLUSTER` are safe to expose via `NEXT_PUBLIC_` variables
+
+2. **Same Values**:
+   - `PUSHER_KEY` = `NEXT_PUBLIC_PUSHER_KEY`
+   - `PUSHER_CLUSTER` = `NEXT_PUBLIC_PUSHER_CLUSTER`
+
+3. **Restart Required**: Restart your development server after adding these variables
+
+## If You Don't Have a Pusher Account:
+
+1. Go to [Pusher Signup](https://pusher.com/signup)
+2. Create a free account (Channels has a generous free tier)
+3. Verify your email
+4. Create your first app in the dashboard
+
+## Verification:
+
+Test your Pusher setup by running your application and checking if real-time features work. You can also check the Pusher dashboard for connection events.
 
 ---
+
+
 
