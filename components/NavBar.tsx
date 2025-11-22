@@ -9,6 +9,7 @@ export default function NavBar() {
         <Link href="/" className="text-xl font-semibold">Jira Clone</Link>
         <div className="flex items-center gap-3">
           <Link href="/dashboard" className="text-sm">Dashboard</Link>
+          <Link href="/analytics" className="text-sm">Analytics</Link>
           <SignInButton>
             <button className="px-3 py-1 rounded bg-slate-100">Sign in</button>
           </SignInButton>
