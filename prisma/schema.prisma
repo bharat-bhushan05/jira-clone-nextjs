@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  id           String   @id @map("_id") @default(auto()) @db.ObjectId
+  name         String
+  description  String?
+  ownerClerkId String
+  createdAt    DateTime @default(now())
+  issues       Issue[]  @relation("ProjectToIssue")
+  members      Member[]
+}
+
+model Issue {
+  id             String   @id @map("_id") @default(auto()) @db.ObjectId
+  title          String
+  description    String?
+  status         String   @default("todo")
+  priority       String   @default("medium")
+  project        Project? @relation("ProjectToIssue", fields: [projectId], references: [id])
+  projectId      String?  @db.ObjectId
+  assigneeClerkId String?
+  createdAt      DateTime @default(now())
+  comments       Comment[]
+  attachments    FileAttachment[]
+}
+
+model Comment {
+  id           String  @id @map("_id") @default(auto()) @db.ObjectId
+  content      String
+  issue        Issue?  @relation(fields: [issueId], references: [id])
+  issueId      String? @db.ObjectId
+  authorClerkId String
+  createdAt    DateTime @default(now())
+}
+
+model Member {
+  id           String  @id @map("_id") @default(auto()) @db.ObjectId
+  project      Project? @relation(fields: [projectId], references: [id])
+  projectId    String?  @db.ObjectId
+  clerkId      String
+  role         String   // e.g., owner, admin, developer, viewer
+  createdAt    DateTime @default(now())
+}
+
+model FileAttachment {
+  id          String @id @map("_id") @default(auto()) @db.ObjectId
+  filename    String
+  url         String
+  issue       Issue? @relation(fields: [issueId], references: [id])
+  issueId     String? @db.ObjectId
+  uploadedBy  String
+  createdAt   DateTime @default(now())
+}
