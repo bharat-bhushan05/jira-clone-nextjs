@@ -407,5 +407,85 @@ Ensure environment variables are set in the platform.
 
 # 🎉 Backend API is running!
 
+
+---
+Here's how to get each of these details from Clerk.com:
+
+## Step 1: Access Clerk Dashboard
+
+1. Go to [Clerk Dashboard](https://dashboard.clerk.dev)
+2. Sign in and select your application
+
+## Step 2: Get `NEXT_PUBLIC_CLERK_FRONTEND_API`
+
+1. In the left sidebar, click on **"API Keys"**
+2. Look for **"Frontend API Key"** (starts with `pk_`)
+3. Copy this value
+
+## Step 3: Get `CLERK_API_KEY`
+
+1. In the **"API Keys"** section
+2. Look for **"Backend API Key"** (starts with `sk_`)
+3. Copy this value (this is your `CLERK_API_KEY`)
+
+## Step 4: Get `CLERK_JWT_KEY`
+
+1. In the **"API Keys"** section
+2. Scroll to **"JWT Public Key"**
+3. Copy the entire key (includes `-----BEGIN PUBLIC KEY-----` and `-----END PUBLIC KEY-----`)
+
+## Step 5: Alternative Navigation Path
+
+If you don't see these directly:
+
+1. Go to **"Configure"** → **"API Keys"** in the sidebar
+2. Or go to **"Settings"** → **"API Keys"**
+
+## Visual Guide:
+
+```
+Clerk Dashboard → Your App → API Keys Section
+├── Frontend API Key → NEXT_PUBLIC_CLERK_FRONTEND_API
+├── Backend API Key → CLERK_API_KEY  
+└── JWT Public Key → CLERK_JWT_KEY
+```
+
+## Important Notes:
+
+- **`NEXT_PUBLIC_CLERK_FRONTEND_API`** starts with `pk_` (public key)
+- **`CLERK_API_KEY`** starts with `sk_` (secret key) - keep this secure!
+- **`CLERK_JWT_KEY`** is a multi-line PEM format key
+
+## Environment Variables Format:
+
+Add these to your `.env.local` file:
+
+```env
+# Clerk Keys
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...  # This is the Frontend API
+CLERK_SECRET_KEY=sk_test_...                   # This is the Backend API
+CLERK_JWT_KEY=-----BEGIN PUBLIC KEY-----
+...your actual key here...
+-----END PUBLIC KEY-----
+
+# Database URL (from your database provider)
+DATABASE_URL="your-database-connection-string"
+```
+
+**Note**: Some projects use `NEXT_PUBLIC_CLERK_FRONTEND_API` while others use `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` - they refer to the same Frontend API Key.
+
+## For `DATABASE_URL`:
+
+This is NOT from Clerk. You'll get this from:
+- **Railway**, **Vercel**, **PlanetScale**, **Supabase**, or your database provider
+- Check your database service's dashboard for the connection string
+
+## Security Reminder:
+- Never commit these keys to version control
+- Make sure `.env.local` is in your `.gitignore`
+- Restart your development server after adding these variables
+
+---
+
 ---
 
